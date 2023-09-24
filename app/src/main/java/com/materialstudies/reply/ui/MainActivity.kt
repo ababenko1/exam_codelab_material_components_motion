@@ -32,7 +32,7 @@ import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import com.google.android.material.transition.MaterialFadeThrough
 import com.google.android.material.transition.MaterialSharedAxis
-import com.google.android.material.transition.platform.MaterialElevationScale
+import com.google.android.material.transition.MaterialElevationScale
 import com.materialstudies.reply.R
 import com.materialstudies.reply.data.EmailStore
 import com.materialstudies.reply.databinding.ActivityMainBinding
@@ -138,7 +138,8 @@ class MainActivity : AppCompatActivity(),
         // BottomAppBar and FAB based on the current destination.
         when (destination.id) {
             R.id.homeFragment -> {
-                currentEmailId = -1
+               // currentEmailId = -1
+                currentEmailId = 1
                 setBottomAppBarForHome(getBottomAppBarMenuForDestination(destination))
             }
             R.id.emailFragment -> {

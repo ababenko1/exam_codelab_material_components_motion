@@ -26,7 +26,8 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.google.android.material.transition.platform.MaterialContainerTransform
+import androidx.transition.TransitionManager
+import com.google.android.material.transition.MaterialContainerTransform
 import com.materialstudies.reply.R
 import com.materialstudies.reply.data.Account
 import com.materialstudies.reply.data.AccountStore
@@ -146,7 +147,15 @@ class ComposeFragment : Fragment() {
         closeRecipientCardOnBackPressed.expandedChip = chip
         closeRecipientCardOnBackPressed.isEnabled = true
 
-        // TODO: Set up MaterialContainerTransform beginDelayedTransition.
+        val transform = MaterialContainerTransform().apply {
+            startView = chip
+            endView = binding.recipientCardView
+            scrimColor = Color.TRANSPARENT
+            endElevation = resources.getDimension(R.dimen.email_recipient_card_popup_elevation_compat)
+            addTarget(binding.recipientCardView)
+        }
+        TransitionManager.beginDelayedTransition(binding.composeConstraintLayout, transform)
+
         binding.recipientCardView.visibility = View.VISIBLE
         // Using INVISIBLE instead of GONE ensures the chip's parent layout won't shift during
         // the transition due to chips being effectively removed.
@@ -162,7 +171,15 @@ class ComposeFragment : Fragment() {
         closeRecipientCardOnBackPressed.expandedChip = null
         closeRecipientCardOnBackPressed.isEnabled = false
 
-        // TODO: Set up MaterialContainerTransform beginDelayedTransition.
+        val transform = MaterialContainerTransform().apply {
+            startView = binding.recipientCardView
+            endView = chip
+            scrimColor = Color.TRANSPARENT
+            startElevation = resources.getDimension(R.dimen.email_recipient_card_popup_elevation_compat)
+            addTarget(chip)
+        }
+        TransitionManager.beginDelayedTransition(binding.composeConstraintLayout, transform)
+
         chip.visibility = View.VISIBLE
         binding.recipientCardView.visibility = View.INVISIBLE
     }
